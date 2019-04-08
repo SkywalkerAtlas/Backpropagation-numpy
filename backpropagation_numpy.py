@@ -47,8 +47,8 @@ class NN:
                 g = o_e
                 for k in range(len(self.n_hs)+1, 0, -1):
                     g = np.multiply(g, dsigmod(a_k[k]))
-                    c_w[k] = np.matmul(g, h_k[k-1].T)
-                    c_b[k] = g
+                    c_w[k] += np.matmul(g, h_k[k-1].T)
+                    c_b[k] += g
                     g = np.matmul(self.w[k].T, g)
 
 
@@ -91,5 +91,5 @@ if __name__ == '__main__':
     mlp = NN(1, (10, 8), 1)
     x = np.random.random(size=(100, 1))
     y = np.sin(x)
-    mlp.fit(x, y, epochs=100, lr=0.01)
-    print('x = %f, predict = %f, real = %f' % (0, mlp.predict(np.array([0])), np.sin(0)))
+    mlp.fit(x, y, epochs=1000, lr=0.01)
+    print('x = %f, predict = %f, real = %f' % (0.1, mlp.predict(np.array([0.1])), np.sin(0.1)))
