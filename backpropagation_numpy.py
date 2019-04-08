@@ -38,7 +38,7 @@ class NN:
 
                 y_hat = h_k[len(self.n_hs)+1]
 
-                loss += np.sum((y_hat - y[i])) ** 2 / 2
+                loss += np.sum((y_hat - y[i]) ** 2) / 2
 
                 # --------------------------------------------------------------------------------------------
                 # Back propagation
@@ -68,8 +68,8 @@ class NN:
         a_k, h_k = {}, {}
         h_k[0]= np.reshape(x, (x.shape[0], 1))
         for k in range(1, len(self.n_hs)+2):
-                    a_k[k] = np.matmul(self.w[k], h_k[k-1]) + self.b[k]
-                    h_k[k] = sigmod(a_k[k])
+            a_k[k] = np.matmul(self.w[k], h_k[k-1]) + self.b[k]
+            h_k[k] = sigmod(a_k[k])
 
         y_hat = h_k[len(self.n_hs)+1]
 
@@ -91,5 +91,5 @@ if __name__ == '__main__':
     mlp = NN(1, (10, 8), 1)
     x = np.random.random(size=(100, 1))
     y = np.sin(x)
-    mlp.fit(x, y, epochs=100000, lr=0.01)
+    mlp.fit(x, y, epochs=100, lr=0.01)
     print('x = %f, predict = %f, real = %f' % (0, mlp.predict(np.array([0])), np.sin(0)))
